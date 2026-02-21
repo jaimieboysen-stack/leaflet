@@ -39,11 +39,23 @@ function readCSV(){
 
 //map csv
 function mapCSV(data){
-	
+
+	// circle options
+	let circleOptions = {
+		radius: 5,
+		weight: 1,
+		color: 'white',
+		fillColor: 'dodgerblue',
+		fillOpacity: 1
+	}
+
 	// loop through each entry
 	data.data.forEach(function(item,index){
-		// create marker
-		let marker = L.marker([item.latitude,item.longitude])
+		// create a marker
+		let marker = L.circleMarker([item.latitude,item.longitude],circleOptions)
+		.on('mouseover',function(){
+			this.bindPopup(`${item.title}<br><img src="${item.thumbnail_url}">`).openPopup()
+		})
 
 		// add marker to featuregroup
 		markers.addLayer(marker)
@@ -52,6 +64,6 @@ function mapCSV(data){
 	// add featuregroup to map
 	markers.addTo(map)
 
-	// fit markers to map
+	// fit map to markers
 	map.fitBounds(markers.getBounds())
 }
