@@ -28,7 +28,8 @@ let data = [
 	}
 ]
 
-
+//create feature group 
+let myMarkers = L.featureGroup();
 
 var map = L.map('map').setView([34.0697,-118.4432], 17);
 
@@ -39,8 +40,16 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // loop through data
 data.forEach(function(item){
-	// add marker to map
-	let marker = L.marker([item.lat,item.lon]).addTo(map).bindPopup(item.title).openPopup();	
+	// create marker
+	let marker = L.marker([item.lat,item.lon]).bindPopup(item.title)
+
+	// add marker to featuregroup
+	myMarkers.addLayer(marker)
 
 })
 
+// after loop, add the FeatureGroup to map
+myMarkers.addTo(map)
+
+// zoom to the extent of all markers
+map.fitBounds(myMarkers.getBounds())
