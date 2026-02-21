@@ -46,6 +46,8 @@ data.forEach(function(item){
 	// add marker to featuregroup
 	myMarkers.addLayer(marker)
 
+	// add data to sidebar
+	$('.sidebar').append('<div class="sidebar-item">'+item.title+'</div>')
 })
 
 // after loop, add the FeatureGroup to map
